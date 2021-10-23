@@ -1,0 +1,17 @@
+docker run -it -p 8080:8080 \
+  --env "_AIRFLOW_DB_UPGRADE=true" \
+  --env "_AIRFLOW_WWW_USER_CREATE=true" \
+  --env "_AIRFLOW_WWW_USER_PASSWORD=admin" \
+    apache/airflow:main-python3.8 webserver
+
+
+docker run -it -p 8080:8080 --name airflow --env "_AIRFLOW_DB_UPGRADE=true" --env "_AIRFLOW_WWW_USER_CREATE=true" --env "_AIRFLOW_WWW_USER_PASSWORD=admin" apache/airflow webserver
+
+airflow users create \
+    --username admin \
+    --firstname Peter \
+    --lastname Parker \
+    --role Admin \
+    --email spiderman@superhero.org
+
+docker run -it -p 8080:8080 --name airflow-cont -v ${PWD}/dags/:/opt/airflow/dags apache/airflow-test
